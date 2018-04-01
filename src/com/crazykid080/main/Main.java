@@ -64,7 +64,7 @@ public class Main {
     public static Credential authorize() throws IOException {
         // Load client secrets.
         InputStream in =
-            Main.class.getResourceAsStream("/client_secret.json");
+            Main.class.getResourceAsStream("resources/client_secret.json");
         GoogleClientSecrets clientSecrets =
             GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -100,19 +100,17 @@ public class Main {
 
         // Prints the names and majors of students in a sample spreadsheet:
         // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-        String spreadsheetId = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms";
-        String range = "Class Data!A2:E";
-        ValueRange response = service.spreadsheets().values()
-            .get(spreadsheetId, range)
-            .execute();
+        String spreadsheetId = "111lPIHYoeCJB-OzTWR1rPE1lSOjofJtwnor_3ismZ_A";
+        String ranges = "Number!A2:A15";
+        ValueRange response = service.spreadsheets().values().batchGet(spreadsheetId, ranges, Dimension.COLUMNS).execute();
         List<List<Object>> values = response.getValues();
         if (values == null || values.size() == 0) {
             System.out.println("No data found.");
         } else {
-          System.out.println("Name, Major");
-          for (List row : values) {
+          //System.out.println("Name, Major");
+          for (List coulumn : values) {
             // Print columns A and E, which correspond to indices 0 and 4.
-            System.out.printf("%s, %s\n", row.get(0), row.get(4));
+            System.out.printf("%s, %s\n", coulumn.get(1), coulumn.get(15));
           }
         }
     }
