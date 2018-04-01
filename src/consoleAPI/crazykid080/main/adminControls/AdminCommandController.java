@@ -13,6 +13,18 @@ public class AdminCommandController{
 	 * @param command the text from the console.
 	 */
 	public static void runCommand(String command){		
+		command.toLowerCase();
+		/**
+		 * We want:
+		 * Get random number
+		 * Submit number
+		 * Comment on a number
+		 * 
+		 * */
+		
+		if(command.contains("get number")) {
+			
+		}
 		if(command.contains("exit")){
 			exit();
 		}
@@ -29,5 +41,8 @@ public class AdminCommandController{
 	public static void exit() {
 		System.exit(1);
 	}
-
+	public static String getNumber() {
+		
+		return null;
+	}
 }
