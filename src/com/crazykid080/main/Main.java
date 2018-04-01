@@ -103,8 +103,8 @@ public class Main {
         // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
         String spreadsheetId = "111lPIHYoeCJB-OzTWR1rPE1lSOjofJtwnor_3ismZ_A";
         List<String> ranges = new ArrayList<String>();
-        ranges.add("Number!A2");
-        ranges.add("Number!A500");
+        ranges.add("Number!A2:A25");
+        //ranges.add("Number!A25");
         //ranges.add("Number!A3");
         BatchGetValuesResponse response = service.spreadsheets().values().batchGet(spreadsheetId)
         		.setMajorDimension("COLUMNS")
@@ -117,7 +117,8 @@ public class Main {
           //System.out.println("Name, Major");
           for (ValueRange rows : values) {
             // Print columns A and E, which correspond to indices 0 and 4.
-            System.out.printf("%s, %s\n", rows.get(0), rows.get(500));
+            System.out.printf("%s, %s\n", rows.get(0), rows.get(25)); // returns null for some reason
+            System.out.println(values); //returns everything :/
           }
         }
     }
