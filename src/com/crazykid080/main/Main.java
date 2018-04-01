@@ -16,6 +16,7 @@ import com.google.api.services.sheets.v4.Sheets;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -101,16 +102,22 @@ public class Main {
         // Prints the names and majors of students in a sample spreadsheet:
         // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
         String spreadsheetId = "111lPIHYoeCJB-OzTWR1rPE1lSOjofJtwnor_3ismZ_A";
-        String ranges = "Number!A2:A15";
-        ValueRange response = service.spreadsheets().values().batchGet(spreadsheetId, ranges, Dimension.COLUMNS).execute();
-        List<List<Object>> values = response.getValues();
+        List<String> ranges = new ArrayList<String>();
+        ranges.add("Number!A2");
+        ranges.add("Number!A500");
+        //ranges.add("Number!A3");
+        BatchGetValuesResponse response = service.spreadsheets().values().batchGet(spreadsheetId)
+        		.setMajorDimension("COLUMNS")
+        		.setRanges(ranges)
+        		.execute();
+        List<ValueRange> values = response.getValueRanges();
         if (values == null || values.size() == 0) {
             System.out.println("No data found.");
         } else {
           //System.out.println("Name, Major");
-          for (List coulumn : values) {
+          for (ValueRange rows : values) {
             // Print columns A and E, which correspond to indices 0 and 4.
-            System.out.printf("%s, %s\n", coulumn.get(1), coulumn.get(15));
+            System.out.printf("%s, %s\n", rows.get(0), rows.get(500));
           }
         }
     }
